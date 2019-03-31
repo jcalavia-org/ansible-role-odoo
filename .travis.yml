@@ -3,8 +3,7 @@ language: python
 services: docker
 
 env:
-  global:
-    - ROLE_NAME: "odoo"
+  global: []
   matrix:
     - MOLECULE_DISTRO: "ubuntu1604"
 
@@ -12,11 +11,8 @@ install:
   # Install test dependencies.
   - pip install molecule docker
 
-before_script:
-  # Use actual Ansible Galaxy role name for the project directory.
-  - cd ../
-  - mv ansible-role-$ROLE_NAME jcalavia.$ROLE_NAME
-  - cd jcalavia.$ROLE_NAME
+before_script: []
+
 
 script:
   # Run tests.
