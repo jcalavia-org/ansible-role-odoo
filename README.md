@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jcalavia-org/ansible-role-odoo.svg?branch=master)](https://travis-ci.org/jcalavia-org/ansible-role-odoo)
+
 Role Name
 =========
 
