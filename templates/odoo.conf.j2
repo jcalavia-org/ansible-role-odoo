@@ -1,0 +1,25 @@
+[options]
+admin_passwd = kairops
+db_host = {{ odoo_db_host }}
+db_port = {{ odoo_db_port }}
+db_user = {{ odoo_db_user }}
+db_password = {{ odoo_db_pass }}
+#db_name = {{ odoo_db_name }}
+list_db = {{ odoo_list_db }}
+#proxy_mode = True
+
+
+limit_memory_hard = {{ (ansible_memtotal_mb - 512 ) * 1024 * 1024 }} 
+limit_memory_soft = {{ (ansible_memtotal_mb - 1024 ) * 1024 * 1024 }} 
+workers = {{ (ansible_processor_vcpus * 2 ) + 1}}
+max_cron_threads = {{ odoo_max_cron_threads }}
+
+limit_request = {{ odoo_limit_request }}
+limit_time_cpu = {{ odoo_limit_time_cpu }}
+limit_time_real = {{ odoo_limit_time_real }}
+addons_path = {{ odoo_addons_path }}
+log_level  = {{ odoo_log_level }} 
+logfile = {{  odoo_log_file }} 
+xmlrpc_port = {{ odoo_xmlrpc_port }}
+without_demo = all
+ 

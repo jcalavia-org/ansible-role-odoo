@@ -1,0 +1,54 @@
+---
+# defaults file for jcalavia.odoo
+
+# defaults file for odoo
+
+odoo_user: odoo
+odoo_group: odoo
+
+# Database module_defaults
+odoo_list_db: False
+odoo_db_host: False
+odoo_db_port: False
+odoo_db_name: odoo
+odoo_db_user: odoo
+odoo_db_pass: False
+
+odoo_max_cron_threads: 1
+odoo_limit_request: 8192
+odoo_limit_time_cpu: 120
+odoo_limit_time_real: 240
+odoo_xmlrpc_port: 8069
+odoo_log_level: info
+
+##################################################################################
+#                                                                                #
+# Packages to install by the role. Will be overriden by:                         #
+#   vars/{{ ansible_distribution }}-{{ ansible_distribution_version }}           #
+#                                                                                #
+##################################################################################
+odoo_custom_packages:
+  os: []
+  python: []
+  npm: []
+  ruby: []
+
+##################################################################################
+#                                                                                #
+# Compatible sources based on unarchive module                                   #
+#                                                                                #
+#  - url: "https://apps.odoo.com/loempia/download/[module]/[version]/[file].zip" #
+#                                                                                #
+##################################################################################
+addons_list: []
+
+##################################################################################
+#                                                                                #
+# Module / App name list to install via command line                             #
+#                                                                                #
+#  - crm                                                                         #
+#  - project                                                                     #
+#  - ...                                                                         #
+#                                                                                #
+##################################################################################
+install_addons: []

@@ -1,0 +1,25 @@
+---
+# vars file for jcalavia.odoo
+
+odoo_config_path: "/etc/odoo"
+odoo_config_file: "{{ odoo_config_path }}/odoo.conf"
+odoo_addons_path: "/usr/lib/python3/dist-packages/odoo/addons"
+odoo_log_file: "/var/log/odoo/odoo-server.log"
+
+odoo_packages:
+  os:
+    - unzip
+    - odoo
+    - python3-pip
+    - npm
+    - git
+    - ruby2.4
+
+  python:
+    - vobject
+    - qrcode
+    - num2words
+
+  npm: []
+
+  ruby: []
