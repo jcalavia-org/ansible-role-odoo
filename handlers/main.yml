@@ -1,0 +1,9 @@
+---
+# handlers file for jcalavia.odoo
+
+- name: restart odoo
+  systemd:
+    name: odoo
+    state: started
+    daemon_reload: yes
+    enabled: yes

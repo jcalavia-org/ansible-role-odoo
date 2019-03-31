@@ -1,0 +1,78 @@
+---
+# tasks file for jcalavia.odoo
+
+- name: "Configure custom repositories"
+  block:
+    - name: "Add Odoo Repository Key"
+      apt_key:
+        url: "https://nightly.odoo.com/odoo.key"
+        state: present
+
+    - name: "Add Odoo Repository"
+      apt_repository:
+        repo: "deb http://nightly.odoo.com/11.0/nightly/deb/ ./"
+        state: present
+
+    - name: "Add BrightBox Ruby Repository"
+      apt_repository:
+        repo: "ppa:brightbox/ruby-ng"
+        state: present
+
+    - name: "Update distribution"
+      apt:
+        upgrade: dist
+        update_cache: yes
+        cache_valid_time: 8640
+  tags:
+    - odoo_repositories
+    - odoo_install
+
+- name: "Install required packages"
+  block:
+    - name: "Install OS packages"
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ odoo_packages.os|flatten(levels=1) }}"
+
+    - name: "Install Python packages"
+      pip:
+        name: "{{ item }}"
+        state: present
+        executable: pip3
+      loop: "{{ odoo_packages.python|flatten(levels=1) }}"
+
+    - name: "Install NPM Packages"
+      npm:
+        name: "{{ item }}"
+        global: yes
+      loop: "{{ odoo_packages.npm|flatten(levels=1) }}"
+
+    - name: "Install Ruby Packages"
+      gem:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ odoo_packages.ruby|flatten(levels=1) }}"
+  tags:
+    - odoo_install
+
+- name: "Configure Odoo server"
+  block:
+    - name: "Ensure Odoo service is started and enabled"
+      systemd:
+        name: odoo
+        state: started
+        daemon_reload: yes
+        enabled: yes
+
+    - name: "Configure Odoo server"
+      template:
+        src: "odoo.conf.j2"
+        dest: "{{ odoo_config_path }}/odoo.conf"
+        owner: "{{ odoo_user }}"
+        group: "{{ odoo_group }}"
+        mode: 0640
+      notify: restart odoo
+
+  tags:
+    - odoo_config
