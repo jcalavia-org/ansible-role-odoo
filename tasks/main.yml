@@ -1,5 +1,5 @@
 ---
-# tasks file for jcalavia.odoo
+# tasks file for jjcalavia-org.ansible-role-odoo
 
 - name: "Configure custom repositories"
   block:
@@ -58,6 +58,11 @@
 
 - name: "Configure Odoo server"
   block:
+    - name: "Wait for Database to be ready"
+      wait_for:
+        host: "{{ odoo_db_host }}"
+        port: "{{ odoo_db_port }}"
+
     - name: "Ensure Odoo service is started and enabled"
       systemd:
         name: odoo
@@ -76,3 +81,17 @@
 
   tags:
     - odoo_config
+
+- name: "Install addons"
+  block:
+    - name: "Stop Odoo Server"
+      systemd:
+        name: odoo
+        state: stopped
+
+    - name: "Install applications / modules"
+      command: "odoo -c {{ odoo_config_file }} --stop-after-init --init={{ item }}"
+      loop: "{{ odoo_custom_addons.install|flatten(levels=1) }}"
+      notify: restart odoo
+  tags:
+    - odoo_addons

@@ -1,25 +1,41 @@
 ---
-# vars file for jcalavia.odoo
+# vars file for jcalavia-org.ansible-role-odoo
 
-odoo_config_path: "/etc/odoo"
-odoo_config_file: "{{ odoo_config_path }}/odoo.conf"
-odoo_addons_path: "/usr/lib/python3/dist-packages/odoo/addons"
-odoo_log_file: "/var/log/odoo/odoo-server.log"
-
-odoo_packages:
-  os:
-    - unzip
-    - odoo
-    - python3-pip
-    - npm
-    - git
-    - ruby2.4
-
-  python:
-    - vobject
-    - qrcode
-    - num2words
-
+##################################################################################
+#                                                                                #
+# Custom packages to install:                                                    #
+#                                                                                #
+##################################################################################
+odoo_custom_packages:
+  os: []
+  python: []
   npm: []
-
   ruby: []
+
+##################################################################################
+#                                                                                #
+# Configurable and installable add-ons                                           #
+#                                                                                #
+#  - url: "https://apps.odoo.com/loempia/download/[module]/[version]/[file].zip" #
+#  - git:                                                                        #
+#  - install:                                                                    #
+#                                                                                #
+##################################################################################
+odoo_custom_addons:
+  url: []
+  git: []
+  install:
+    - crm
+    - website
+    - product
+    - project
+    - hr_holidays
+    - hr_recruitment
+    - hr_timesheet
+    - survey
+    - website_blog
+    - website_forum
+    - website_slides
+    - crm_project
+    - knowledge
+    - website_event

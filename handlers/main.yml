@@ -1,5 +1,5 @@
 ---
-# handlers file for jcalavia.odoo
+# handlers file for jcalavia-org.ansible-role-odoo
 
 - name: restart odoo
   systemd:

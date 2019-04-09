@@ -1,0 +1,13 @@
+---
+- name: Prepare
+  hosts: all
+  become: yes
+  vars:
+    postgresql_databases:
+      - name: "odoo"
+    postgresql_users:
+      - name: "odoo"
+        password: "password"
+
+  roles:
+    - role: geerlingguy.postgresql

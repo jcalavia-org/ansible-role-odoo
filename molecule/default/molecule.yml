@@ -10,6 +10,8 @@ platforms:
     image: solita/ubuntu-systemd:16.04
     privileged: True
     command: /sbin/init
+    port_bindings:
+      8069:8069
 provisioner:
   name: ansible
   lint:
