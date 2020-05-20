@@ -3,6 +3,10 @@
 
 - name: "Configure custom repositories"
   block:
+    - name: 'Install required packages for apt-key to work'
+      apt:
+        name: gpg-agent
+        state: present
     - name: "Add Odoo Repository Key"
       apt_key:
         url: "https://nightly.odoo.com/odoo.key"
@@ -10,7 +14,7 @@
 
     - name: "Add Odoo Repository"
       apt_repository:
-        repo: "deb http://nightly.odoo.com/11.0/nightly/deb/ ./"
+        repo: "deb http://nightly.odoo.com/12.0/nightly/deb/ ./"
         state: present
 
     - name: "Add BrightBox Ruby Repository"
@@ -64,10 +68,8 @@
         port: "{{ odoo_db_port }}"
 
     - name: "Ensure Odoo service is started and enabled"
-      systemd:
+      service:
         name: odoo
-        state: started
-        daemon_reload: yes
         enabled: yes
 
     - name: "Configure Odoo server"
@@ -84,11 +86,6 @@
 
 - name: "Install addons"
   block:
-    - name: "Stop Odoo Server"
-      systemd:
-        name: odoo
-        state: stopped
-
     - name: "Install applications / modules"
       command: "odoo -c {{ odoo_config_file }} --stop-after-init --init={{ item }}"
       loop: "{{ odoo_custom_addons.install|flatten(levels=1) }}"
