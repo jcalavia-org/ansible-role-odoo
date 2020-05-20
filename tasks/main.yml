@@ -67,11 +67,6 @@
         host: "{{ odoo_db_host }}"
         port: "{{ odoo_db_port }}"
 
-    - name: "Ensure Odoo service is started and enabled"
-      service:
-        name: odoo
-        enabled: yes
-
     - name: "Configure Odoo server"
       template:
         src: "odoo.conf.j2"
@@ -83,12 +78,3 @@
 
   tags:
     - odoo_config
-
-- name: "Install addons"
-  block:
-    - name: "Install applications / modules"
-      command: "odoo -c {{ odoo_config_file }} --stop-after-init --init={{ item }}"
-      loop: "{{ odoo_custom_addons.install|flatten(levels=1) }}"
-      notify: restart odoo
-  tags:
-    - odoo_addons
