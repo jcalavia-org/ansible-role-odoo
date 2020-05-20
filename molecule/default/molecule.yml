@@ -3,18 +3,21 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+
 platforms:
-  - name: instance
-    image: solita/ubuntu-systemd:16.04
-    privileged: True
-    command: /sbin/init
+  - name: ubuntu1804
+    image: geerlingguy/docker-ubuntu1804-ansible
+    pre_build_image: true
+    published_ports:
+      - 8069:8069
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible
+scenario:
+  lint_sequence:
+    - lint

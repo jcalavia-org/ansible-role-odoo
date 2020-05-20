@@ -1,0 +1,20 @@
+---
+- name: Update repositories cache
+  hosts: all
+  become: yes
+  tasks:
+  - name: 'Update package cache'
+    apt:
+      update_cache: yes
+
+- name: Install PostgreSQL from geerlingguy.postgresql
+  hosts: all
+  become: yes
+  vars:
+    postgresql_databases:
+      - name: "odoo"
+    postgresql_users:
+      - name: "odoo"
+        password: "password"
+  roles:
+    - role: geerlingguy.postgresql

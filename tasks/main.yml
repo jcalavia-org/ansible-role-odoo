@@ -1,8 +1,12 @@
 ---
-# tasks file for jcalavia.odoo
+# tasks file for jjcalavia-org.ansible-role-odoo
 
 - name: "Configure custom repositories"
   block:
+    - name: 'Install required packages for apt-key to work'
+      apt:
+        name: gpg-agent
+        state: present
     - name: "Add Odoo Repository Key"
       apt_key:
         url: "https://nightly.odoo.com/odoo.key"
@@ -10,7 +14,7 @@
 
     - name: "Add Odoo Repository"
       apt_repository:
-        repo: "deb http://nightly.odoo.com/11.0/nightly/deb/ ./"
+        repo: "deb http://nightly.odoo.com/12.0/nightly/deb/ ./"
         state: present
 
     - name: "Add BrightBox Ruby Repository"
@@ -58,12 +62,10 @@
 
 - name: "Configure Odoo server"
   block:
-    - name: "Ensure Odoo service is started and enabled"
-      systemd:
-        name: odoo
-        state: started
-        daemon_reload: yes
-        enabled: yes
+    - name: "Wait for Database to be ready"
+      wait_for:
+        host: "{{ odoo_db_host }}"
+        port: "{{ odoo_db_port }}"
 
     - name: "Configure Odoo server"
       template:
