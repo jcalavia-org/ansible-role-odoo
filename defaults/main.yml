@@ -19,8 +19,9 @@ odoo_limit_time_real: 240
 odoo_xmlrpc_port: 8069
 odoo_log_level: info
 
-odoo_install_path: "/opt/odoo"
-odoo_addons_path: "{{ odoo_install_path }}/extra-addons"
+odoo_base_path: "/opt/odoo"
+odoo_install_path: "{{ odoo_base_path }}/odoo12"
+odoo_addons_path: "{{ odoo_base_path }}/extra-addons"
 
 odoo_config_path: "/etc/odoo"
 odoo_config_file: "{{ odoo_config_path }}/odoo.conf"

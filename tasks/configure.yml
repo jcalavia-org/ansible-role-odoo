@@ -26,5 +26,8 @@
         dest: '/etc/systemd/system/odoo.service'
       notify: restart odoo
 
+    - name: 'Reload systemd configuration'
+      command: systemctl --user daemon-reload
+
   tags:
     - odoo_config

@@ -8,9 +8,9 @@
     odoo_addons:
       market: []
       repository:
-        - url: 'https://github.com/muk-it/muk_web.git'
-          version: "{{ odoo_version }}"
         - url: 'https://github.com/muk-it/muk_base.git'
+          version: "{{ odoo_version }}"
+        - url: 'https://github.com/muk-it/muk_web.git'
           version: "{{ odoo_version }}"
 
   roles:
