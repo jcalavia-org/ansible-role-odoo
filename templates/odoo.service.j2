@@ -1,0 +1,13 @@
+[Unit]
+Description=Odoo Open Source ERP and CRM
+After=postgresql.service 
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart="{{ odoo_install_path }}/odoo-bin" --config "{{ odoo_config_file }}" --logfile "{{ odoo_log_file }}"
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target

@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  author: jcalavia
-  description: Odoo for Ubuntu
-  company: "Jcalavia's Organization"
+  author: Jorge Calavia
+  description: A role to install Odoo from estable builds with customizable addons
+  company: Jorge Calavia's Organizatio
   license: "license (MIT)"
 
   min_ansible_version: 2.0
@@ -10,7 +10,7 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 16.04
+        - 18.04
 
   galaxy_tags:
     - odoo

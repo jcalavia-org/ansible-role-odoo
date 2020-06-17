@@ -1,0 +1,57 @@
+---
+# tasks file for install jcalavia-org.ansible-role-odoo
+
+- name: 'Install packages'
+  block:
+    - name: 'OS packages'
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ odoo_packages.os|flatten(levels=1) }}"
+      notify: restart odoo
+
+    - name: 'Python packages'
+      pip:
+        name: "{{ item }}"
+        state: present
+        executable: pip3
+      loop: "{{ odoo_packages.python|flatten(levels=1) }}"
+      notify: restart odoo
+
+    - name: 'NPM Packages'
+      npm:
+        name: "{{ item }}"
+        global: yes
+      loop: "{{ odoo_packages.npm|flatten(levels=1) }}"
+      notify: restart odoo
+
+    - name: 'Download odoo from source'
+      git:
+        repo: 'https://github.com/odoo/odoo.git'
+        version: "{{ odoo_version }}"
+        dest: "{{ odoo_install_path }}"
+      notify: restart odoo
+
+  tags:
+    - odoo_install
+
+- name: 'Install addons'
+  block:
+    - name: 'Download addons from market site'
+      unarchive:
+        src: "{{ item.url }}"
+        dest: "{{ odoo_addons_path }}"
+        remote_src: yes
+      loop: "{{ odoo_addons.market|flatten(levels=1) }}"
+      notify: restart odoo
+
+    - name: 'Download addons from repositories'
+      git:
+        repo: "{{ item.url }}"
+        version: "{{ item.version }}"
+        dest: "{{ odoo_addons_path }}"
+      loop: "{{ odoo_addons.repository|flatten(levels=1) }}"
+      notify: restart odoo
+
+  tags:
+    - odoo_install

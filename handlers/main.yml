@@ -4,5 +4,5 @@
 - name: restart odoo
   service:
     name: odoo
-    state: restarted
+    state: reloaded
     enabled: yes

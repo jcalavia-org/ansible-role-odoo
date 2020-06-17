@@ -1,12 +1,4 @@
 ---
-- name: Update repositories cache
-  hosts: all
-  become: yes
-  tasks:
-  - name: 'Update package cache'
-    apt:
-      update_cache: yes
-
 - name: Install PostgreSQL from geerlingguy.postgresql
   hosts: all
   become: yes
@@ -16,5 +8,15 @@
     postgresql_users:
       - name: "odoo"
         password: "password"
+  pre_tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+    - name: 'Install required packages for apt-key to work'
+      apt:
+        name: gpg-agent
+        state: present
+
   roles:
     - role: geerlingguy.postgresql

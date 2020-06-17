@@ -1,0 +1,30 @@
+---
+- name: 'Configure Odoo server'
+  block:
+    - name: 'Ensure config directory is present'
+      file:
+        path: "{{ odoo_config_path }}"
+        state: directory
+
+    - name: 'Wait for Database to be ready'
+      wait_for:
+        host: "{{ odoo_db_host }}"
+        port: "{{ odoo_db_port }}"
+
+    - name: 'Configure Odoo server'
+      template:
+        src: "odoo.conf.j2"
+        dest: "{{ odoo_config_file }}"
+      #  owner: "{{ odoo_user }}"
+      #  group: "{{ odoo_group }}"
+        mode: 0640
+      notify: restart odoo
+
+    - name: 'Install Odoo systemd unit file'
+      template: 
+        src: 'odoo.service.j2'
+        dest: '/etc/systemd/system/odoo.service'
+      notify: restart odoo
+
+  tags:
+    - odoo_config
