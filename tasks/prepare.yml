@@ -1,18 +1,19 @@
 ---
 - name: 'Prepare server for Odoo installation'
   block:
-    - name: 'Update distribution'
-      apt:
-        upgrade: dist
-        update_cache: yes
-        cache_valid_time: 8640
-      when: ansible_os_family == 'Debian'
-      changed_when: false
 
     - name: 'Add BrightBox Ruby Repository'
       apt_repository:
         repo: "ppa:brightbox/ruby-ng"
         state: present
+
+    - name: 'Create Odoo system user'
+      user:
+        name: "{{ odoo_user }}"
+        home: "{{ odoo_base_path }}"
+        group: "{{ odoo_user }}"
+        system: yes
+        move_home: yes
 
     - name: 'Ensure required directories are present'
       file:
@@ -25,14 +26,6 @@
         - "{{ odoo_addons_repos_path }}"
         - "{{ odoo_log_path }}"
     
-    - name: 'Create Odoo system user'
-      user:
-        name: "{{ odoo_user }}"
-        home: "{{ odoo_install_path }}"
-        group: "{{ odoo_user }}"
-        system: yes
-        move_home: yes
-
   tags:
     - odoo_repositories
     - odoo_install
