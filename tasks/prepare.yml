@@ -13,7 +13,7 @@
       apt_repository:
         repo: "ppa:brightbox/ruby-ng"
         state: present
-    
+
     - name: 'Ensure required directories are present'
       file:
         path: "{{ item }}"
