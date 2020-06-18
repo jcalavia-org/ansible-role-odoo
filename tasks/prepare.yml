@@ -18,11 +18,20 @@
       file:
         path: "{{ item }}"
         state: directory
+        owner: "{{ odoo_user }}"
       with_items:
         - "{{ odoo_install_path }}"
         - "{{ odoo_addons_path }}"
         - "{{ odoo_addons_repos_path }}"
         - "{{ odoo_log_path }}"
+    
+    - name: 'Create Odoo system user'
+      user:
+        name: "{{ odoo_user }}"
+        home: "{{ odoo_install_path }}"
+        group: "{{ odoo_user }}"
+        system: yes
+        move_home: yes
 
   tags:
     - odoo_repositories
