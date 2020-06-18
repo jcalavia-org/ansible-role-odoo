@@ -22,6 +22,7 @@ odoo_log_level: info
 odoo_base_path: "/opt/odoo"
 odoo_install_path: "{{ odoo_base_path }}/odoo12"
 odoo_addons_path: "{{ odoo_base_path }}/extra-addons"
+odoo_addons_repos_path: "{{ odoo_base_path }}/addons-repos"
 
 odoo_config_path: "/etc/odoo"
 odoo_config_file: "{{ odoo_config_path }}/odoo.conf"

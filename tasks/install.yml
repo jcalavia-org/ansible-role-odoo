@@ -50,6 +50,7 @@
         repo: "{{ item.url }}"
         version: "{{ item.version }}"
         dest: "{{ odoo_addons_path }}"
+        separate_git_dir: "{{ odoo_addons_repos_path }}/{{ item.name }}"
       loop: "{{ odoo_addons.repository|flatten(levels=1) }}"
       notify: restart odoo
 
