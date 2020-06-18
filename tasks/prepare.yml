@@ -16,7 +16,7 @@
     
     - name: 'Ensure required directories are present'
       file:
-        path: "{{ odoo_addons_path }}"
+        path: "{{ item }}"
         state: directory
       with_items:
         - "{{ odoo_install_path }}"
