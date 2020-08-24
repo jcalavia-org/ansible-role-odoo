@@ -1,10 +1,14 @@
+---
 linters:
   flake8:
     fixer: true
   ansible:
-    files:
-      - .stickler.yml
-      - .travis.yml
   yamllint:
+  
 fixers:
   enable: true
+
+files:
+ ignore:
+   - '.stickler.yml'
+   - '.travis.yml'
