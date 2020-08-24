@@ -17,7 +17,7 @@
         repo: "deb http://nightly.odoo.com/12.0/nightly/deb/ ./"
         state: present
 
-    - name: "Add BrightBox Ruby Repository"
+    - name: "Add BrightBox Ruby Repository cosmetic change"
       apt_repository:
         repo: "ppa:brightbox/ruby-ng"
         state: present
