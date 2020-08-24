@@ -2,6 +2,9 @@ linters:
   flake8:
     fixer: true
   ansible:
+    files:
+      - .stickler.yml
+      - .travis.myl
   yamllint:
 fixers:
   enable: true
