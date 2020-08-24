@@ -1,0 +1,7 @@
+---
+- name: Stickler linter file
+  hosts: all
+  become: true
+
+  roles:
+    - role: ansible-role-odoo
