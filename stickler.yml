@@ -4,4 +4,5 @@
   become: true
 
   roles:
-    - role: ./ansible-role-odoo
+    - { role: ./ansible-role-odoo }
+
