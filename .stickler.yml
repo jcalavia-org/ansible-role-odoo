@@ -4,7 +4,7 @@ linters:
   ansible:
     files:
       - .stickler.yml
-      - .travis.myl
+      - .travis.yml
   yamllint:
 fixers:
   enable: true
