@@ -1,4 +1,3 @@
-
 ---
 - name: Stickler linter file
   hosts: all
