@@ -1,22 +1,22 @@
----
+os: linux
+dist: bionic
 language: python
-services: docker
-
-env:
-  global: []
-  matrix:
-    - MOLECULE_DISTRO: "ubuntu1804"
 
 install:
-  # Install test dependencies.
-  - pip install molecule yamllint ansible-lint docker
-
-before_script: []
-
+- pip3 install --upgrade pip
+- pip3 install molecule molecule-ec2 boto3 ansible-lint awscli
 
 script:
-  # Run tests.
-  - molecule test
+- aws configure set region $AWS_DEFAULT_REGION
+- aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+- aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+- molecule test
 
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+cache:
+  directories:
+    - '$HOME/.cache/pip'
+    - '$HOME/virtualenv'
+
+branches:
+  only:
+  - master

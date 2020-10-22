@@ -2,23 +2,35 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
-lint: |
-  set -e
-  yamllint .
-#  ansible-lint
+  name: ec2
 
+lint: |
+  ansible-lint
 platforms:
-  - name: ubuntu1804
-    image: geerlingguy/docker-ubuntu1804-ansible
-    pre_build_image: true
-    privileged: True
-    volume_mounts:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
+  - name: Ubuntu Server 18.04 LTS
+    image: ami-07ee42ba0209b6d77
+    instance_type: t1.micro
+    vpc_subnet_id: subnet-00e245860955fea19
+    ssh_user: ubuntu
+
 provisioner:
   name: ansible
+
 verifier:
   name: ansible
+
 scenario:
   lint_sequence:
     - lint
+  test_sequence:
+    - destroy
+    - syntax
+    - lint
+    - create
+    - prepare
+    - converge
+    - side_effect
+    - converge
+    - idempotence
+    - verify
+    - destroy

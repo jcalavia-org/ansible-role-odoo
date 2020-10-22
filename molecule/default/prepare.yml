@@ -1,4 +1,16 @@
 ---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible (Ubuntu)
+      become: true
+      raw: > 
+        test -e /usr/bin/python || 
+        (apt -y update && apt install -y python-minimal python-zipstream)
+      when: ansible_user == 'ubuntu'
+      changed_when: false
+
 - name: Install PostgreSQL from geerlingguy.postgresql
   hosts: all
   become: yes
@@ -17,6 +29,7 @@
       apt:
         name: gpg-agent
         state: present
+      changed_when: false
 
   roles:
     - role: geerlingguy.postgresql
