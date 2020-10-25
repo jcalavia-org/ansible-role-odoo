@@ -41,6 +41,7 @@
       unarchive:
         src: "{{ item.url }}"
         dest: "{{ odoo_addons_path }}"
+        mode: 0644
         remote_src: yes
       loop: "{{ odoo_addons.market|flatten(levels=1) }}"
       notify: restart odoo

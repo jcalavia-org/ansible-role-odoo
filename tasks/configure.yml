@@ -5,6 +5,7 @@
       file:
         path: "{{ odoo_config_path }}"
         state: directory
+        mode: 0644
 
     - name: 'Wait for Database to be ready'
       wait_for:
@@ -24,10 +25,11 @@
       template:
         src: 'odoo.service.j2'
         dest: '/etc/systemd/system/odoo.service'
+        mode: 0644
       notify: restart odoo
 
-    - name: 'Reload systemd configuration'
-      command: systemctl daemon-reload
+#    - name: 'Reload systemd configuration'
+#      command: systemctl daemon-reload
 
   tags:
     - odoo_config

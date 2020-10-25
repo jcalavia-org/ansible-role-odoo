@@ -3,7 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: false
-  no_log: "{{ molecule_no_log }}"
+  #no_log: "{{ molecule_no_log }}"
+  no_log: false
   vars:
     ssh_port: 22
 

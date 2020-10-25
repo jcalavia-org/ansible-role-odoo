@@ -19,13 +19,14 @@
       file:
         path: "{{ item }}"
         state: directory
+        mode: 0644
         owner: "{{ odoo_user }}"
       with_items:
         - "{{ odoo_install_path }}"
         - "{{ odoo_addons_path }}"
         - "{{ odoo_addons_repos_path }}"
         - "{{ odoo_log_path }}"
-    
+
   tags:
     - odoo_repositories
     - odoo_install
