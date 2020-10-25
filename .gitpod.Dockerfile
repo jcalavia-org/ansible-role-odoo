@@ -1,5 +1,6 @@
 FROM gitpod/workspace-full
 
+USER root
 RUN apt-get update && \
     apt-get install -y python && \
     apt-get clean autoclean && \
@@ -7,3 +8,5 @@ RUN apt-get update && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 RUN pip3 install --upgrade pip && molecule ansible-lint boto3 awscli molecule-ec2
+
+USER gitpod
